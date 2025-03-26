@@ -12,7 +12,7 @@ from django.core.exceptions import FieldDoesNotExist
 from django.db.models.fields.related import ForeignObject
 from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor
 from django.db.models.sql.where import WhereNode, AND
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from compositefk.related_descriptors import CompositeForwardManyToOneDescriptor
 
@@ -200,7 +200,7 @@ class CompositeForeignKey(ForeignObject):
             if isinstance(v, RawFieldValue)
         }
 
-    def get_extra_restriction(self, where_class, alias, related_alias):
+    def get_extra_restriction(self, alias, related_alias):
         constraint = WhereNode(connector=AND)
         for remote, local in self._raw_fields.items():
             lookup = local.get_lookup(self, self.related_model._meta.get_field(remote), alias)
@@ -330,8 +330,9 @@ class RawFieldValue(CompositePart):
 
 
 class FunctionBasedFieldValue(RawFieldValue):
-    def __init__(self, func):
+    def __init__(self, func, value):
         self._func = func
+        super().__init__(value)
 
     def deconstruct(self):
         module_name = self.__module__
