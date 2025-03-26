@@ -38,11 +38,7 @@ Installation
 
 1. Install using pip:
 
-   ``pip install django-composite-foreignkey``
-
-2. Alternatively, you can install download or clone this repo and call
-
-    ``pip install -e .``.
+   ``pip install -e git+https://github.com/amirali/django-composite-foreignkey@main#egg=django-composite-foreignkey``
 
 
 
